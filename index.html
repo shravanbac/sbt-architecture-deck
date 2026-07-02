@@ -9,15 +9,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#101826;
-    --ink-soft:#1a2434;
-    --paper:#EEF1F4;
-    --text:#16202E;
-    --muted:#5C6B7A;
-    --line:#D3DAE2;
-    --accent:#6C4EF0;
-    --client:#0FB5A6;
-    --server:#F0952B;
+    --bg:#F5F7FA;
+    --surface:#FFFFFF;
+    --text:#1B2430;
+    --muted:#5A6675;
+    --line:#E4E9F0;
+    --accent:#4F46E5;
+    --accent-deep:#4338CA;
+    --client:#0D9488;
+    --server:#C57F14;
     --disp:"Space Grotesk",sans-serif;
     --body:"IBM Plex Sans",sans-serif;
     --mono:"IBM Plex Mono",monospace;
@@ -26,7 +26,7 @@
   html,body{height:100%}
   body{
     font-family:var(--body);
-    background:var(--ink);
+    background:var(--bg);
     color:var(--text);
     overflow:hidden;
   }
@@ -35,15 +35,19 @@
     position:absolute;inset:0;
     display:flex;flex-direction:column;justify-content:center;
     padding:7vh 8vw;
-    background:var(--paper);
+    background:var(--bg);
     opacity:0;visibility:hidden;
     transform:translateY(14px);
     transition:opacity .5s ease,transform .5s ease,visibility .5s;
   }
   .slide.active{opacity:1;visibility:visible;transform:none}
-  .slide.dark{background:var(--ink);color:#E9EDF2}
-  .slide.dark .muted{color:#8A99AA}
-  .slide.dark .rule{background:#2b3547}
+  .slide.tint{background:#EEF0FB}
+  .slide.invert{background:var(--accent);color:#fff}
+  .slide.invert .lead{color:rgba(255,255,255,.85)}
+  .slide.invert .eyebrow{color:rgba(255,255,255,.92)}
+  .slide.invert .eyebrow::before{background:rgba(255,255,255,.7)}
+  .byline{margin-top:2.6rem;font-family:var(--mono);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .slide.invert .byline{color:rgba(255,255,255,.88)}
 
   .eyebrow{
     font-family:var(--mono);
@@ -69,10 +73,13 @@
 
   .card{
     border:1px solid var(--line);
-    background:rgba(255,255,255,.5);
+    background:var(--surface);
     padding:1.3rem 1.4rem;
   }
-  .slide.dark .card{border-color:#2a3547;background:rgba(255,255,255,.03)}
+  .slide.invert .card{border-color:rgba(255,255,255,.24);background:rgba(255,255,255,.1)}
+  .slide.invert .card .k{color:#fff}
+  .slide.invert .card h3{color:#fff}
+  .slide.invert .card p{color:rgba(255,255,255,.82)}
   .card .k{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem}
   .card h3{font-family:var(--disp);font-weight:500;font-size:1.15rem;margin-bottom:.4rem;line-height:1.15}
   .card p{font-size:.92rem;color:var(--muted);line-height:1.5}
@@ -96,7 +103,7 @@
   .tag{display:inline-block;font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;padding:.2rem .5rem;border-radius:2px;margin-bottom:.5rem}
   .tag.client{color:var(--client);border:1px solid var(--client)}
   .tag.server{color:var(--server);border:1px solid var(--server)}
-  .converge{border:1px solid var(--accent);background:rgba(108,78,240,.06)}
+  .converge{border:1px solid var(--accent);background:rgba(79,70,229,.06)}
   .converge .val{color:var(--accent)}
   @media(max-width:820px){.flow{grid-template-columns:1fr}.conn{display:none}}
 
@@ -118,7 +125,11 @@
 
   /* chrome */
   .hud{position:fixed;left:8vw;right:8vw;bottom:3.2vh;display:flex;justify-content:space-between;align-items:center;z-index:20;font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;color:var(--muted)}
-  .slide.dark ~ .hud .dot{background:#3a4658}
+  body.on-invert .hud{color:rgba(255,255,255,.72)}
+  body.on-invert .count,body.on-invert .brand{color:rgba(255,255,255,.72)}
+  body.on-invert .dot{border-color:rgba(255,255,255,.55)}
+  body.on-invert .dot.on{background:#fff;border-color:#fff}
+  body.on-invert .progress{background:#fff}
   .dots{display:flex;gap:.5rem}
   .dot{width:8px;height:8px;border:1px solid var(--muted);background:transparent;cursor:pointer;padding:0;transition:.25s}
   .dot.on{background:var(--accent);border-color:var(--accent)}
@@ -137,11 +148,11 @@
 <div class="deck" id="deck">
 
   <!-- 1 -->
-  <section class="slide dark active">
+  <section class="slide invert active">
     <div class="eyebrow">Architecture Brief / SBT Labs</div>
     <h1 class="t-xl">Multi-store commerce,<br>one customer profile.</h1>
     <p class="lead" style="margin-top:1.6rem">Headless stores that stay swappable by design, feeding unified profiles, journeys, and analytics on Adobe Experience Platform.</p>
-    <div style="margin-top:2.6rem;font-family:var(--mono);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)">Architect&nbsp;&nbsp;·&nbsp;&nbsp;Shravan</div>
+    <div class="byline">Architect&nbsp;&nbsp;·&nbsp;&nbsp;Shravan</div>
   </section>
 
   <!-- 2 -->
@@ -227,7 +238,7 @@
   </section>
 
   <!-- 7 -->
-  <section class="slide dark">
+  <section class="slide tint">
     <div class="eyebrow">06 / Identity</div>
     <h2>How one person stays one person.</h2>
     <div class="grid g3">
@@ -291,7 +302,7 @@
   </section>
 
   <!-- 11 -->
-  <section class="slide dark">
+  <section class="slide invert">
     <div class="eyebrow">10 / Migration story</div>
     <h2>Change one thing, not everything.</h2>
     <div class="grid g3">
@@ -320,6 +331,7 @@
   const dots=[...dotsWrap.children];
   function render(){
     slides.forEach((s,x)=>s.classList.toggle('active',x===i));
+    document.body.classList.toggle('on-invert',slides[i].classList.contains('invert'));
     dots.forEach((d,x)=>d.classList.toggle('on',x===i));
     countEl.textContent=String(i+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
     prog.style.width=((i+1)/slides.length*100)+'%';
